@@ -19,7 +19,7 @@ interface PageWrapperProps {
 export default function PageWrapper({ children, className = "" }: PageWrapperProps) {
   return (
     <main
-      className={`mx-auto w-full max-w-[var(--max-width-site)] flex-1 px-6 py-16 ${className}`}
+      className={`mx-auto w-full max-w-(--max-width-site) flex-1 px-6 py-16 ${className}`}
     >
       {children}
     </main>

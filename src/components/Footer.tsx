@@ -4,13 +4,17 @@
  * Extend with social links or a contact CTA in later phases.
  */
 export default function Footer() {
-  const year = new Date().getFullYear();
-
   return (
     <footer className="w-full border-t border-border bg-background">
-      <div className="mx-auto flex max-w-(--max-width-site) items-center justify-between px-6 py-4 text-sm text-muted">
-        <span>Turgut Hatip</span>
-        <span>© {year}</span>
+      <div className="mx-auto flex max-w-(--max-width-site) items-center px-6 py-4 text-sm text-muted">
+        <a
+          href="https://www.linkedin.com/in/turguthatipoglu/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hover:text-foreground transition-colors"
+        >
+          LinkedIn
+        </a>
       </div>
     </footer>
   );

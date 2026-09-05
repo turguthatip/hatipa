@@ -18,18 +18,13 @@ export default function Navbar() {
         <nav aria-label="Primary">
           <ul className="flex items-center gap-8 text-sm text-muted">
             <li>
-              <Link href="/work" className="hover:text-foreground transition-colors">
-                Work
+              <Link href="/process" className="hover:text-foreground transition-colors">
+                Process
               </Link>
             </li>
             <li>
-              <Link href="/about" className="hover:text-foreground transition-colors">
-                About
-              </Link>
-            </li>
-            <li>
-              <Link href="/contact" className="hover:text-foreground transition-colors">
-                Contact
+              <Link href="/projects" className="hover:text-foreground transition-colors">
+                Projects
               </Link>
             </li>
           </ul>

@@ -9,13 +9,8 @@ const titles = [
   "UX optimisation for Verifier",
   "Digital banking app concept design",
   "Feature design (UX/UI) for Turkcell",
-  "Branding for Assuva",
-  "Branding for Are Architecture",
   "UX/UI optimisation for Insider",
   "UI design for Insider",
-  "Branding for MB Interior Design",
-  "Short animation Human Being",
-  "Short animation Human Being",
 ];
 
 function slugify(title: string): string {
@@ -26,7 +21,7 @@ function slugify(title: string): string {
     .replace(/(^-|-$)/g, "");
 }
 
-/* Dedupe slugs for repeated titles (e.g. the two "Human Being" animations). */
+/* Dedupe slugs in case titles repeat. */
 const slugCounts = new Map<string, number>();
 
 export const projects: Project[] = titles.map((title) => {

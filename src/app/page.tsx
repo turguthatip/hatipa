@@ -1,14 +1,15 @@
 import Link from "next/link";
 import PageWrapper from "@/components/PageWrapper";
+import WordsPullUp from "@/components/WordsPullUp";
 import { projects } from "@/lib/projects";
 
 export default function HomePage() {
   return (
     <PageWrapper>
       <h1 className="text-4xl font-bold tracking-tight text-foreground">
-        Hi, my name is Turgut
+        <WordsPullUp text="Hi, my name is Turgut" />
         <br />
-        I design digital products
+        <WordsPullUp text="I design digital products" startIndex={5} />
       </h1>
       <p className="mt-4 max-w-xl text-lg text-muted">
         I specialise in crafting UX/UI solutions for digital products that prioritise user satisfaction and help businesses move towards their objectives. My expertise lies in high-fidelity prototyping, user research, visual design, and information architecture

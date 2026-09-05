@@ -1,19 +1,6 @@
+import Link from "next/link";
 import PageWrapper from "@/components/PageWrapper";
-
-const projects = [
-  "UX optimisation for Tap&Sign",
-  "UX optimisation for My Vodafone",
-  "UX optimisation for Verifier",
-  "Digital banking app concept design",
-  "Feature design (UX/UI) for Turkcell",
-  "Branding for Assuva",
-  "Branding for Are Architecture",
-  "UX/UI optimisation for Insider",
-  "UI design for Insider",
-  "Branding for MB Interior Design",
-  "Short animation Human Being",
-  "Short animation Human Being",
-];
+import { projects } from "@/lib/projects";
 
 export default function HomePage() {
   return (
@@ -32,11 +19,15 @@ export default function HomePage() {
           Selected projects
         </h2>
         <div className="mt-8 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2">
-          {projects.map((title, i) => (
-            <article key={i} className="group cursor-pointer">
+          {projects.map((project) => (
+            <Link
+              key={project.slug}
+              href={`/projects/${project.slug}`}
+              className="group"
+            >
               <div className="aspect-4/3 w-full rounded-2xl border-2 border-transparent bg-border transition-colors group-hover:border-foreground" />
-              <h3 className="mt-4 text-lg text-foreground">{title}</h3>
-            </article>
+              <h3 className="mt-4 text-lg text-foreground">{project.title}</h3>
+            </Link>
           ))}
         </div>
       </section>

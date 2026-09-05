@@ -21,6 +21,11 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Turgut Hatip — Portfolio",
   description: "Designer & developer portfolio.",
+  /* Remove once the site is live on its final domain. */
+  robots: {
+    index: false,
+    follow: false,
+  },
 };
 
 export default function RootLayout({

@@ -34,27 +34,11 @@ export default function Navbar() {
         hidden ? "-translate-y-full" : "translate-y-0"
       }`}
     >
-      <div className="mx-auto flex max-w-(--max-width-site) items-center justify-between px-6 py-4">
+      <div className="mx-auto flex max-w-(--max-width-site) items-center px-6 py-4">
         {/* Logo placeholder */}
         <Link href="/" className="text-lg font-semibold tracking-tight text-foreground">
           hatipa
         </Link>
-
-        {/* Primary navigation */}
-        <nav aria-label="Primary">
-          <ul className="flex items-center gap-8 text-sm text-muted">
-            <li>
-              <Link href="/process" className="hover:text-foreground transition-colors">
-                Process
-              </Link>
-            </li>
-            <li>
-              <Link href="/projects" className="hover:text-foreground transition-colors">
-                Projects
-              </Link>
-            </li>
-          </ul>
-        </nav>
       </div>
     </header>
   );

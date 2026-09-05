@@ -26,7 +26,27 @@ export default function HomePage() {
               href={`/projects/${project.slug}`}
               className="group"
             >
-              <div className="aspect-4/3 w-full rounded-2xl border-2 border-transparent bg-border transition-colors group-hover:border-foreground" />
+              {project.thumbnail ? (
+                project.thumbnail.endsWith(".mp4") ? (
+                  <video
+                    className="aspect-4/3 w-full rounded-2xl border-2 border-transparent object-cover transition-colors group-hover:border-foreground"
+                    src={project.thumbnail}
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                  />
+                ) : (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    className="aspect-4/3 w-full rounded-2xl border-2 border-transparent object-cover transition-colors group-hover:border-foreground"
+                    src={project.thumbnail}
+                    alt=""
+                  />
+                )
+              ) : (
+                <div className="aspect-4/3 w-full rounded-2xl border-2 border-transparent bg-border transition-colors group-hover:border-foreground" />
+              )}
               <h3 className="mt-4 text-lg text-foreground">{project.title}</h3>
             </Link>
           ))}

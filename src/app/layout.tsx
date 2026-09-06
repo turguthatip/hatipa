@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -8,8 +8,8 @@ import Footer from "@/components/Footer";
    next/font automatically self-hosts Google Fonts — no layout
    shift, no external network request at runtime.
 ──────────────────────────────────────────────────────────────── */
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
 });
 
@@ -34,7 +34,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${inter.variable} ${geistMono.variable} h-full antialiased`}
     >
       {/* flex-col so Navbar + content + Footer stack vertically;
           min-h-full ensures Footer stays at the bottom even on short pages. */}

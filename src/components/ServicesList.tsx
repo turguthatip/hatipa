@@ -86,20 +86,28 @@ export default function ServicesList() {
         const progress = ease(Math.min(1, Math.max(0, t)));
 
         card.style.height = `${COLLAPSED_HEIGHT + (EXPANDED_HEIGHT - COLLAPSED_HEIGHT) * progress}px`;
-        card.style.backgroundColor = `color-mix(in srgb, var(--color-foreground) ${progress * 100}%, var(--color-border))`;
+        card.style.backgroundColor = `color-mix(in srgb, var(--foreground) ${progress * 100}%, var(--border))`;
 
-        const mixedText = `color-mix(in srgb, var(--color-background) ${progress * 100}%, var(--color-foreground))`;
+        const mixedText = `color-mix(in srgb, var(--background) ${progress * 100}%, var(--foreground))`;
         if (titleRefs.current[i]) titleRefs.current[i]!.style.color = mixedText;
         if (numberRefs.current[i]) numberRefs.current[i]!.style.color = mixedText;
+
+        // Two stages so the text is never visibly clipped mid-reveal: the box
+        // finishes expanding first (0 → 0.5), THEN the text fades in on top
+        // of the already-full-height space (0.5 → 1) — always either
+        // invisible or fully visible, never a half-cut-off sliver growing.
+        const boxProgress = Math.min(1, progress / 0.5);
+        const textProgress = Math.min(1, Math.max(0, (progress - 0.5) / 0.5));
+
         if (descWrapperRefs.current[i]) {
-          descWrapperRefs.current[i]!.style.gridTemplateRows = `${progress}fr`;
-          descWrapperRefs.current[i]!.style.marginTop = `${12 * progress}px`;
+          descWrapperRefs.current[i]!.style.gridTemplateRows = `${boxProgress}fr`;
+          descWrapperRefs.current[i]!.style.marginTop = `${12 * boxProgress}px`;
         }
         if (descRefs.current[i]) {
           descRefs.current[i]!.style.color = mixedText;
-          descRefs.current[i]!.style.opacity = String(progress);
+          descRefs.current[i]!.style.opacity = String(textProgress);
         }
-        if (ringRefs.current[i]) ringRefs.current[i]!.style.opacity = String(progress);
+        if (ringRefs.current[i]) ringRefs.current[i]!.style.opacity = String(textProgress);
       });
     };
 
@@ -143,7 +151,7 @@ export default function ServicesList() {
               ref={(el) => {
                 numberRefs.current[i] = el;
               }}
-              className="text-sm text-muted"
+              className="text-sm text-muted-foreground"
             >
               {String(i + 1).padStart(2, "0")}
             </span>

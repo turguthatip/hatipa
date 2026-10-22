@@ -28,10 +28,38 @@ export interface Project {
   title: string;
   company: string;
   year: string;
-  /** Video shown on the homepage grid card, in place of the placeholder thumbnail. */
+  /** Video or image shown on project cards, in place of the placeholder thumbnail. */
   thumbnail?: string;
+  /** Which homepage folder the project lives in. Defaults to "selected". */
+  collection?: CollectionSlug;
   caseStudy?: CaseStudy;
 }
+
+/* ─── Collections ─────────────────────────────────────────────
+   The homepage folders. Add `collection: "experimental"` to a
+   project below to file it under Experimental.
+──────────────────────────────────────────────────────────────── */
+export type CollectionSlug = "selected" | "experimental";
+
+export interface Collection {
+  slug: CollectionSlug;
+  title: string;
+  /** Mesh-gradient colors for the folder's back cover. */
+  colors: string[];
+}
+
+export const collections: Collection[] = [
+  {
+    slug: "selected",
+    title: "Selected Projects",
+    colors: ["#ff4c00", "#ff991e", "#2f63e7", "#11206a"],
+  },
+  {
+    slug: "experimental",
+    title: "Experimental",
+    colors: ["#6bd7ff", "#1f3ba2", "#b18cff", "#0b0b2a"],
+  },
+];
 
 const tapAndSignCaseStudy: CaseStudy = {
   sections: [
@@ -313,4 +341,12 @@ export function getNextProject(slug: string): Project {
 export function getPreviousProject(slug: string): Project {
   const index = projects.findIndex((project) => project.slug === slug);
   return projects[(index - 1 + projects.length) % projects.length];
+}
+
+export function getCollection(slug: string): Collection | undefined {
+  return collections.find((collection) => collection.slug === slug);
+}
+
+export function getCollectionProjects(slug: CollectionSlug): Project[] {
+  return projects.filter((project) => (project.collection ?? "selected") === slug);
 }

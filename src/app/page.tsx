@@ -1,71 +1,51 @@
-import Link from "next/link";
+import DotBackdrop from "@/components/DotBackdrop";
+import HeatmapLogo from "@/components/HeatmapLogo";
 import PageWrapper from "@/components/PageWrapper";
-import ServicesList from "@/components/ServicesList";
+import ProjectFolder from "@/components/ProjectFolder";
 import WordsPullUp from "@/components/WordsPullUp";
-import { projects } from "@/lib/projects";
+import { collections, getCollectionProjects } from "@/lib/projects";
 
 export default function HomePage() {
   return (
-    <PageWrapper>
-      <h1 className="text-display text-center font-semibold text-foreground">
-        <WordsPullUp text="Hi, my name is Turgut, product designer" />
-      </h1>
-      <p className="mt-6 text-center text-2xl font-medium text-foreground">
-        <WordsPullUp text="I design digital products" startIndex={5} />
-      </p>
+    <PageWrapper className="pt-6 sm:pt-10">
+      {/* First screen: logo, greeting and the project folders. Fills the
+          viewport so the sections below only appear once the visitor scrolls. */}
+      <section className="relative isolate flex min-h-[calc(100svh-2.5rem)] flex-col items-center justify-center gap-12 pb-16 text-center">
+        <DotBackdrop />
 
-      {/* Placeholder video — replace with a real showreel/hero video. */}
-      <div className="mt-20 aspect-video w-full rounded-2xl bg-border" />
-
-      <p className="mx-auto mt-10 max-w-2xl text-center text-lg text-muted">
-        I specialise in crafting UX/UI solutions for digital products that prioritise user satisfaction and help businesses move towards their objectives. My expertise lies in high-fidelity prototyping, user research, visual design, and information architecture
-      </p>
-
-      <section className="mt-32">
-        <h2 className="text-2xl font-bold tracking-tight text-foreground">
-          What I do
-        </h2>
-        <div className="mt-10">
-          <ServicesList />
+        <div className="flex flex-col items-center">
+          <HeatmapLogo
+            delay={0}
+            // The canvas pads the logo for its glow; the negative margin pulls
+            // the title up to where the visible logo ends.
+            className="m-0 -mb-6 block size-40 sm:-mb-8 sm:size-48 [mask-image:radial-gradient(closest-side,black_75%,transparent)]"
+          />
+          <h1 className="text-5xl font-bold tracking-[-0.04em] text-foreground sm:text-7xl">
+            <WordsPullUp text="Hi, I'm Turgut." />
+          </h1>
         </div>
-      </section>
 
-      <section className="mt-32">
-        <h2 className="text-2xl font-bold tracking-tight text-foreground">
-          Selected projects
-        </h2>
-        <div className="mt-10 grid grid-cols-1 gap-x-8 gap-y-14 sm:grid-cols-2">
-          {projects.map((project) => (
-            <Link
-              key={project.slug}
-              href={`/projects/${project.slug}`}
-              className="group"
-            >
-              {project.thumbnail ? (
-                project.thumbnail.endsWith(".mp4") ? (
-                  <video
-                    className="aspect-4/3 w-full rounded-2xl border-2 border-transparent object-cover transition-colors group-hover:border-foreground"
-                    src={project.thumbnail}
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                  />
-                ) : (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
-                    className="aspect-4/3 w-full rounded-2xl border-2 border-transparent object-cover transition-colors group-hover:border-foreground"
-                    src={project.thumbnail}
-                    alt=""
-                  />
-                )
-              ) : (
-                <div className="aspect-4/3 w-full rounded-2xl border-2 border-transparent bg-border transition-colors group-hover:border-foreground" />
-              )}
-              <h3 className="mt-4 text-lg text-foreground">{project.title}</h3>
-            </Link>
+        {/* Top padding leaves room for the cards that fan out of the folders. */}
+        <div className="flex flex-col items-center gap-28 pt-24 sm:flex-row sm:gap-10">
+          {collections.map((collection) => (
+            <ProjectFolder
+              key={collection.slug}
+              collection={collection}
+              projects={getCollectionProjects(collection.slug)}
+            />
           ))}
         </div>
+
+        {/* Mouse/trackpad vs touch wording. */}
+        <p className="mono-label [@media(hover:none)]:hidden">Click a folder to open</p>
+        <p className="mono-label [@media(hover:hover)]:hidden">Tap a folder to open</p>
+      </section>
+
+      <section className="mx-auto mt-16 flex max-w-3xl flex-col gap-4 sm:flex-row sm:gap-12">
+        <h2 className="mono-label shrink-0 pt-1.5 sm:w-40">What I do</h2>
+        <p className="text-pretty text-lg leading-relaxed text-foreground">
+          I specialise in crafting UX/UI solutions for digital products that prioritise user satisfaction and help businesses move towards their objectives. My expertise lies in high-fidelity prototyping, user research, visual design, and information architecture
+        </p>
       </section>
     </PageWrapper>
   );

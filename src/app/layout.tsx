@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Inter, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+import EndOfPageLinkedIn from "@/components/EndOfPageLinkedIn";
+import { cn } from "@/lib/utils";
 
 /* ─── Fonts ──────────────────────────────────────────────────
    next/font automatically self-hosts Google Fonts — no layout
@@ -11,6 +11,8 @@ import Footer from "@/components/Footer";
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
+  /* Optical sizing: large headlines automatically use Inter's tighter Display cut. */
+  axes: ["opsz"],
 });
 
 const geistMono = Geist_Mono({
@@ -30,18 +32,23 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{ children: React.ReactNode }>) {
+  modal,
+}: Readonly<{
+  children: React.ReactNode;
+  /** Parallel route slot (app/@modal) — the project bottom sheet. */
+  modal: React.ReactNode;
+}>) {
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${geistMono.variable} h-full antialiased`}
+      className={cn("h-full", "antialiased", inter.variable, geistMono.variable)}
     >
-      {/* flex-col so Navbar + content + Footer stack vertically;
-          min-h-full ensures Footer stays at the bottom even on short pages. */}
-      <body className="flex min-h-full flex-col bg-background text-foreground font-sans">
-        <Navbar />
+      {/* flex-col + min-h-full so pages can grow (flex-1) to fill the screen. */}
+      <body className="flex min-h-full flex-col overflow-x-clip bg-background text-foreground font-sans">
         {children}
-        <Footer />
+        {/* Hidden while scrolling; jumps into place when the visitor hits the end. */}
+        <EndOfPageLinkedIn />
+        {modal}
       </body>
     </html>
   );
